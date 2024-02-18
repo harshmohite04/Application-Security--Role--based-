@@ -1,0 +1,63 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+  }
+  
+  nav {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  nav h1 {
+    margin: 0;
+  }
+  
+  .logout-btn {
+    background-color: #cc0000;
+    color: #fff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .logout-btn:hover {
+    background-color: #ff0000;
+  }
+  .add, .delete{
+    margin: 20px;
+    background-color: #0559c8;
+    color: #fff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .add:hover ,.delete:hover {
+    background-color: #3450ea;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: row; /* Display elements side by side */
+    align-items: center;
+    /* height: 100vh; Remove this line to allow elements to stack vertically */
+  }
+
+  .content {
+    background-color: #fff;
+    padding: 20px;
+    margin: 10px; /* Add margin for spacing between containers */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+

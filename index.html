@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- ===== CSS ===== -->
+    <link rel="stylesheet" href="assets/css/styles.css">
+
+    <!-- ===== BOX ICONS ===== -->
+    <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
+
+    <title>Vishwakarma University</title>
+</head>
+
+<body>
+    <div class="login">
+        <div class="login__content">
+            <div class="login__img">
+                <img src="assets/img/VU.png" alt="">
+                <!-- <img src="assets/img/img.jpg" alt=""> -->
+            </div>
+
+            <div class="login__forms">
+                <form action="" class="login__registre" id="login-in">
+                    <h1 class="login__title">Sign In</h1>
+
+                    <div class="login__box">
+                        <i class='bx bx-user login__icon'></i>
+                        <input type="email" id="email-signin" placeholder="Email" class="login__input">
+                    </div>
+
+                    <div class="login__box">
+                        <i class='bx bx-lock-alt login__icon'></i>
+                        <input type="password" id="password-signin" placeholder="Password" class="login__input">
+                    </div>
+
+                    <a href="#" class="login__forgot">Forgot password?</a>
+
+                    <div id="signInn" class="login__button">Sign In</div>
+
+                    <div>
+                        <span class="login__account">Are you ?</span>
+                        <span class="login__signin" id="sign-up">Admin</span>
+                    </div>
+                </form>
+
+                <form action="" class="login__create none" id="login-up">
+                    <h1 class="login__title">Create A User</h1>
+
+                    <div class="login__box">
+                        <i class='bx bx-user login__icon'></i>
+                        <input type="text" placeholder="Username" id="username-signup" class="login__input">
+                    </div>
+
+                    <div class="login__box">
+                        <i class='bx bx-at login__icon'></i>
+                        <input type="text" placeholder="Email" id="email-signup" class="login__input">
+                    </div>
+
+                    <div class="login__box">
+                        <i class='bx bx-lock-alt login__icon'></i>
+                        <input type="password" placeholder="Password" id="password-signup" class="login__input">
+                    </div>
+
+                    <div class="login__box">
+                        <i class='bx bx-select-multiple'></i>
+                        <select id="role" name="fruit" class="login__input">
+                            <option value="student">Student</option>
+                            <option value="Faculty">Faculty</option>
+                        </select>
+                    </div>
+                    <a href="#" id="signUpp" class="login__button">Create</a>
+
+                    <div>
+                        <span class="login__account">Are you ?</span>
+                        <span class="login__signup" id="sign-in">Student/Faculty</span>
+                    </div>
+
+                    <!-- <div class="login__social">
+                            <a href="#" class="login__social-icon"><i class='bx bxl-facebook' ></i></a>
+                            <a href="#" class="login__social-icon"><i class='bx bxl-twitter' ></i></a>
+                            <a href="#" class="login__social-icon"><i class='bx bxl-google' ></i></a>
+                        </div> -->
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!--===== MAIN JS =====-->
+    <script src="assets/js/main.js"></script>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, set, ref, update,get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+       
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyAtgRTOIXncyrHob6oElVTSqAzCWS-RrAA",
+            authDomain: "as-role-based.firebaseapp.com",
+            databaseURL: "https://as-role-based-default-rtdb.firebaseio.com",
+            projectId: "as-role-based",
+            storageBucket: "as-role-based.appspot.com",
+            messagingSenderId: "299069153256",
+            appId: "1:299069153256:web:7bc11bd976151335ea0e5d",
+            measurementId: "G-WPF2D0TPF5"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const auth = getAuth();
+
+        document.getElementById('signUpp').addEventListener('click', (e) => {
+
+            var email = document.getElementById('email-signup').value;
+            var username = document.getElementById('username-signup').value;
+            var password = document.getElementById('password-signup').value;
+            var role = document.getElementById('role').value;
+
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+
+                    // Store user data in the database
+                    return set(ref(database, 'users/' + user.uid), {
+                        username: username,
+                        email: email,
+                        role: role
+
+                    });
+                })
+
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+
+                    alert(errorMessage);
+                });
+        })
+        document.getElementById('signInn').addEventListener('click', (e) => {
+            var email = document.getElementById('email-signin').value;
+            var password = document.getElementById('password-signin').value;
+
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    const dt = new Date().toLocaleString();
+                    return update(ref(database, 'users/' + user.uid), {
+                        last_login: dt,
+                    });
+                })
+                .then(() => {
+                    const user = auth.currentUser;
+                    if (user) {
+                        const userRef = ref(database, 'users/' + user.uid);
+                        get(userRef)
+                            .then((snapshot) => {
+                                const userData = snapshot.val();
+                                const role = userData.role;
+                                if (role === 'student'|| role==='Student') {
+                                    window.location.href = "student.html";
+                                } else if (role === 'Faculty'|| role ==='faculty') {
+                                    window.location.href = "faculty.html";
+                                } else {
+                                    alert("Unknown role: " + role);
+                                }
+                            })
+                            .catch((error) => {
+                                console.error("Error getting user data: ", error);
+                            });
+                    } else {
+                        alert("User not found.");
+                    }
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    alert(errorMessage);
+                });
+        });
+
+        const user = auth.currentUser;
+
+
+
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // User is signed in, see docs for a list of available properties
+                // https://firebase.google.com/docs/reference/js/auth.user
+                const uid = user.uid;
+                // ...
+            } else {
+                // User is signed out
+                // ...
+            }
+        });
+
+        logout.addEventListener('click', () => {
+            signOut(auth).then(() => {
+                window.location.href='index.html'
+            }).catch((error) => {
+                alert(errorMessage)
+            });
+        })
+    </script>
+</body>
+
+</html>
