@@ -65,8 +65,10 @@
   const colRef= collection(db,"Course");
   
   const addCourse = document.querySelector(".add");
+  
 addCourse.addEventListener('submit',(e)=>{  
-    e.preventDefault();
+   alert("Course Created");
+  e.preventDefault();
 
     addDoc(colRef,{
         title:addCourse.title.value,
