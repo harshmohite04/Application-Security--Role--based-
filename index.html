@@ -127,7 +127,7 @@
             createUserWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
                     const user = userCredential.user;
-
+                    alert("User Created");
                     // Store user data in the database
                     return set(ref(database, 'users/' + user.uid), {
                         username: username,
