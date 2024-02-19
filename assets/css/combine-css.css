@@ -31,7 +31,7 @@ body {
   .logout-btn:hover {
     background-color: #ff0000;
   }
-  .add, .delete{
+  .added ,.deleted{
     margin: 20px;
     background-color: #0559c8;
     color: #fff;
@@ -42,10 +42,19 @@ body {
     transition: background-color 0.3s;
   }
   
-  .add:hover ,.delete:hover {
+  .added:hover ,.deleted:hover {
     background-color: #3450ea;
   }
 
+  .box1,.box2{
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    column-gap: .5rem;
+    padding: 1.125rem 1rem;
+    background-color: #FFF;
+    margin-top: 1rem;
+    border-radius: .5rem;
+  }
   .container {
     display: flex;
     flex-direction: row; /* Display elements side by side */
