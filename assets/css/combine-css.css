@@ -31,7 +31,7 @@ body {
   .logout-btn:hover {
     background-color: #ff0000;
   }
-.deleted{
+  .added ,.deleted{
     margin: 20px;
     background-color: #0559c8;
     color: #fff;
