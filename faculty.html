@@ -14,28 +14,32 @@
     <h1>Create Course</h1>
     <button class="logout-btn">Logout</button>
   </nav>
+<div class="box1">
 
   <form class="add">
     <label for="title">Title:</label>
-    <input type="text" name="title" required>
+    <input type="text" name="title" required><br><br>
     <label for="description">Description:</label>
-    <input type="text" name="description" required>
-
-    <button>Add New Course</button>
-  </form>
-
-  <form class="delete">
-    <label for="id">Document id:</label>
-    <input type="text" name="id" required>
+    <input type="text" name="description" required><br>
     
-    <button>Delete</button>
+    <button class="added">Add New Course</button>
   </form>
+</div>
+  <div class="box2">
+    
+    <form class="delete">
+      <label for="id">Document id:</label>
+      <input type="text" name="id" placeholder="Enter the ID" required><br>
+      
+      <button class="deleted">Delete</button>
+    </form>
+  </div>
 
 
 <script type="module">
   // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getFirestore,collection,getDocs,addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+  import { getFirestore,collection,getDocs,addDoc,deleteDoc,doc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
   // import { initializeApp } from "firebase/app";
   // import { getFirestore } from "firebase/firestore";
   // import firebase from "firebase/compat/app";
@@ -65,10 +69,9 @@
   const colRef= collection(db,"Course");
   
   const addCourse = document.querySelector(".add");
-  
 addCourse.addEventListener('submit',(e)=>{  
-   alert("Course Created");
-  e.preventDefault();
+  alert("Course Created");
+    e.preventDefault();
 
     addDoc(colRef,{
         title:addCourse.title.value,
@@ -80,8 +83,14 @@ addCourse.addEventListener('submit',(e)=>{
 })
 
 const deleteCourse = document.querySelector(".delete");
-addCourse.addEventListener('submit',(e)=>{
+deleteCourse.addEventListener('submit',(e)=>{
     e.preventDefault()
+    const docRef = doc(db,'Course',deleteCourse.id.value)
+
+    deleteDoc(docRef)
+    .then(()=>{
+      deleteCourse.reset( )
+    })
 })
 
 
